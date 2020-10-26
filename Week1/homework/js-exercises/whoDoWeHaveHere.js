@@ -9,8 +9,8 @@ function xmlHttpReq() {
       const users = xhr.response;
       console.log(
         `Random User Name : ${users.results[0].name.title} ${users.results[0].name.first} ${users.results[0].name.last}`,
-      ); // log only the full name from the api.
-      console.log(users); // log whole api content
+      ); // log only the full name from the api to the console
+      console.log(users); // log whole api content to the console
     } else {
       console.log(` sorry , there is an error  : ${xhr.status}`); // Error handling
     }
