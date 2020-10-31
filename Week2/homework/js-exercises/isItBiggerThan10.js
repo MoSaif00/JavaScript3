@@ -24,8 +24,8 @@ function checkDoubleDigits(num) {
 }
 
 checkDoubleDigits(15)
-  .then(console.log)
-  .catch(console.log);
+  .then(response => console.log(response))
+  .catch(error => console.log(error.message));
 // checkDoubleDigits(5)
-//   .then(console.log)
-//   .catch(console.log);
+// .then(response => console.log(response))
+// .catch(error => console.log(error.message));

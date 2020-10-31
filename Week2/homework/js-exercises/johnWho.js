@@ -30,8 +30,8 @@ function getAnonName(firstName) {
   });
 }
 getAnonName('John')
-  .then(console.log)
-  .catch(console.log);
+  .then(response => console.log(response))
+  .catch(error => console.log(error.message));
 // getAnonName()
-//   .then(console.log)
-//   .catch(console.log);
+//   .then(response => console.log(response))
+//   .catch(error => console.log(error.message));
