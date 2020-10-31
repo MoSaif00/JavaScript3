@@ -16,6 +16,8 @@
 // If the Promise resolves, pass the full name as an argument to resolve with
 // If the Promise rejects, pass an error as the argument to reject with: "You didn't pass in a first name!"
 
+'use strict';
+
 function getAnonName(firstName) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

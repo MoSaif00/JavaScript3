@@ -4,6 +4,8 @@
 // If the number is bigger than 10, resolve with the string: "The number is bigger than 10!"
 // If the number is smaller than 10, reject with the error: "Error! The number is smaller than 10..."
 
+'use strict';
+
 function checkDoubleDigits(num) {
   // Returns a new Promise
   return new Promise((resolve, reject) => {
