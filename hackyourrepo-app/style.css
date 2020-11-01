@@ -87,13 +87,37 @@ select {
   text-decoration: underline;
   letter-spacing: 2px;
 }
-#contributors-name {
+#contributors-members {
+  background-color: green;
+  height: 900px;
+}
+.contributor-box {
   height: 70px;
   width: 97%;
   text-align: center;
   padding: 20px 0 20px 0;
-  margin: 0 auto 2px auto;
+  margin: 0 auto 4px auto;
   background-color: rgb(241, 233, 233);
+}
+.contributor-box img {
+  width: 15%;
+  border-radius: 50px;
+  float: left;
+  margin-left: 12px;
+}
+.contributor-box h4 {
+  font-size: 15px;
+  font-family: 'Lato', sans-serif;
+  float: left;
+  padding-left: 10px;
+}
+.badge {
+  border: solid 1px blue;
+  width: fit-content;
+  float: right;
+  margin-right: 15px;
+  padding: 0 7px 0 7px;
+  background-color: wheat;
 }
 .footer {
   width: 100vw;
