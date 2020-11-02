@@ -41,6 +41,18 @@ select {
   font-weight: bold;
   padding-left: 10px;
 }
+.error-message {
+  background-color: blue;
+  text-align: center;
+  height: 35px;
+  text-decoration: underline;
+  font-weight: bolder;
+  color: rgb(209, 138, 138);
+  width: calc(100% / 1.4);
+  margin: 7px auto 0 auto;
+  border-radius: 3px;
+  display: none;
+}
 .page-contents {
   width: 100%;
   display: flex;
@@ -51,12 +63,13 @@ select {
   padding: 10px;
   background-color: white;
   border-radius: 5px;
-  width: 67%;
+  width: 70%;
   float: left;
   margin-left: 5px;
   height: fit-content;
   margin-top: 10px;
   box-shadow: 5px 5px inset #888888;
+  margin-right: 10px;
 }
 .rep-title-detail {
   font-weight: bold;
@@ -69,7 +82,7 @@ select {
   font-size: 14px;
 }
 .contributors-container {
-  width: 30%;
+  width: 300px;
   margin-right: 5px;
 }
 .contributors-title {
@@ -87,37 +100,38 @@ select {
   text-decoration: underline;
   letter-spacing: 2px;
 }
-#contributors-members {
-  background-color: green;
-  height: 900px;
-}
 .contributor-box {
-  height: 70px;
+  height: 80px;
   width: 97%;
   text-align: center;
   padding: 20px 0 20px 0;
   margin: 0 auto 4px auto;
   background-color: rgb(241, 233, 233);
 }
+.contributor-box:last-child {
+  margin-bottom: 80px;
+}
 .contributor-box img {
   width: 15%;
   border-radius: 50px;
   float: left;
-  margin-left: 12px;
+  margin-left: 7px;
 }
-.contributor-box h4 {
+.contributor-box a {
   font-size: 15px;
   font-family: 'Lato', sans-serif;
   float: left;
-  padding-left: 10px;
+  padding-left: 13px;
 }
 .badge {
-  border: solid 1px blue;
-  width: fit-content;
+  border: solid 2px #ffeadb;
+  width: 35px;
   float: right;
-  margin-right: 15px;
-  padding: 0 7px 0 7px;
-  background-color: wheat;
+  background-color: rgb(173, 173, 173);
+  height: 35px;
+  margin: auto 15px auto 0;
+  border-radius: 50px;
+  color: blue;
 }
 .footer {
   width: 100vw;
@@ -164,8 +178,8 @@ select {
   .contributors-container {
     justify-content: right;
     right: 0;
-    width: 15rem;
     margin: auto;
     margin-top: 15px;
+    width: 270px;
   }
 }
