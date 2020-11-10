@@ -16,6 +16,7 @@ function main() {
   bodyContainer.appendChild(headerSection);
   headerSection.appendChild(headingHeaderText);
   headerSection.appendChild(selectTag);
+
   // create and append the the Error message to the body container
   const errorDiv = document.createElement('div');
   errorDiv.setAttribute('class', 'error-message');
@@ -42,6 +43,13 @@ function main() {
   contributorDivTag.appendChild(contributeTitleTag);
   contributeTitleTag.appendChild(contributHeadingText);
   contributorDivTag.appendChild(contributersMembersDiv);
+
+  // // pagination DOM
+  // const paginationDiv = document.createElement('div');
+  // paginationDiv.setAttribute('class', 'pagenumbers');
+  // paginationDiv.setAttribute('id', 'pagination');
+  // contributorDivTag.appendChild(paginationDiv);
+
   // create and append the footer of the page
   const footerSection = document.createElement('section');
   footerSection.setAttribute('class', 'footer');
@@ -85,33 +93,30 @@ function main() {
       input.appendChild(optionsToSelect);
     });
   }
-  // function to create  and append the contributors Elements
-  function createContributorElements(member) {
-    const contributerBoxDiv = document.createElement('div');
-    contributerBoxDiv.setAttribute('class', 'contributor-box');
-    const contributerImage = document.createElement('img');
-    contributerImage.src = member.avatar_url;
-    const contributerName = document.createElement('a');
-    // eslint-disable-next-line no-template-curly-in-string
-    contributerName.setAttribute('href', '${member.html_url}');
-    contributerName.innerText = member.login;
-    const badge = document.createElement('h5');
-    badge.setAttribute('class', 'badge');
-    badge.innerText = member.contributions;
-    contributersMembersDiv.appendChild(contributerBoxDiv);
-    contributerBoxDiv.appendChild(contributerImage);
-    contributerBoxDiv.appendChild(contributerName);
-    contributerBoxDiv.appendChild(badge);
-  }
 
   // functio to fetch the data from the contributors url and return to the contributors section
   function displayContributors(arr) {
     fetchData(arr.contributors_url).then(data => {
       data.forEach(member => {
-        createContributorElements(member);
+        const contributerBoxDiv = document.createElement('div');
+        contributerBoxDiv.setAttribute('class', 'contributor-box');
+        const contributerImage = document.createElement('img');
+        contributerImage.src = member.avatar_url;
+        const contributerName = document.createElement('a');
+        // eslint-disable-next-line no-template-curly-in-string
+        contributerName.setAttribute('href', '${member.html_url}');
+        contributerName.innerText = member.login;
+        const badge = document.createElement('h5');
+        badge.setAttribute('class', 'badge');
+        badge.innerText = member.contributions;
+        contributersMembersDiv.appendChild(contributerBoxDiv);
+        contributerBoxDiv.appendChild(contributerImage);
+        contributerBoxDiv.appendChild(contributerName);
+        contributerBoxDiv.appendChild(badge);
       });
     });
   }
+
   // funtion to put the repository information at the repository details when it is selected from the select options
   function displayDetailsOfSelectedRepository(arr) {
     contributersMembersDiv.innerHTML = '';
