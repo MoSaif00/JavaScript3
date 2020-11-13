@@ -1,6 +1,7 @@
 'use strict';
 
 function main() {
+  // DOM Elements
   document.body.innerHTML = `
   <div class="container">
     <section class="header" id="header">
@@ -38,14 +39,18 @@ function main() {
     <h1>HackYourFuture Repositories</h1>
   </section>
   `;
+
+  // get the necessary elements
   const errorDiv = document.getElementById('error-message');
   const selectRepository = document.getElementById('repositories-select');
   const repositoryDetailsDiv = document.getElementById('repository-details');
   const contributorMembersDiv = document.getElementById('contributors-members');
 
+  // declaration to be used on pagination
   let currentPage = 1;
   let rows = 5;
-  // function displays those repositories in an alphabetically-ordered list , snippet from Stackoverflow
+
+  // function displays those repositories in an alphabetically-ordered list , snippet from Stackoverflow : https://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript/6712080#6712080
   function sortAlphabetically(data) {
     data.sort(function compare(a, b) {
       const nameA = a.name.toUpperCase();
@@ -60,6 +65,7 @@ function main() {
     });
   }
 
+  // function used to add pagination feature to the contributors section when there is more than 5 contributors will appear
   function paginateThePage(arr) {
     const wrapper = document.getElementById('paginationNumber');
 
@@ -90,10 +96,10 @@ function main() {
           contributors,
           contributorMembersDiv,
           rows,
-          currentPage
+          currentPage,
         );
         const currentNum = document.querySelector(
-          '.pagination .btn-page-active'
+          '.pagination .btn-page-active',
         );
         currentNum.classList.remove('btn-page-active');
         button.classList.add('btn-page-active');
@@ -103,11 +109,12 @@ function main() {
     displayContributors(arr, contributorMembersDiv, rows, currentPage);
     setPagination(arr, wrapper, rows);
   }
-  // function to get the data from API  and place it on the select and repository div
+
+  // function to get the data from API
   function fetchTheDataOfRepositories() {
     const url = 'https://api.github.com/orgs/HackYourFuture/repos?per_page=100';
     fetch(url)
-      .then((response) => {
+      .then(response => {
         if (response.status < 400) {
           const data = response.json();
           return data;
@@ -115,22 +122,23 @@ function main() {
           errorDiv.style.display = 'block';
         }
       })
-      .then((data) => {
+      .then(data => {
         updateRepositoriesToSelect(data);
       })
       .catch(() => (errorDiv.style.display = 'block'));
   }
 
+  // function used to place the fetched data to the select menu sorted alphabetically  and updated to the repository details
   function updateRepositoriesToSelect(repositoryData) {
     sortAlphabetically(repositoryData);
 
-    repositoryData.forEach((element) => {
+    repositoryData.forEach(element => {
       const optionsToSelect = document.createElement('option');
       optionsToSelect.setAttribute('value', element.name);
       optionsToSelect.innerText = element.name;
       selectRepository.appendChild(optionsToSelect);
 
-      selectRepository.addEventListener('change', (e) => {
+      selectRepository.addEventListener('change', e => {
         if (e.target.value === optionsToSelect.value) {
           fetchContributors(element);
 
@@ -157,7 +165,7 @@ function main() {
           Updated :
           <span class="repo-detail">${element.updated_at.replace(
             /[A-Z]/g,
-            ' '
+            ' ',
           )}</span>
         </h4>
           `;
@@ -165,26 +173,24 @@ function main() {
       });
     });
   }
-  // function displayContributors(contributors, container, rowPerPage, page) {
-  //   container.innerHTML = '';
 
-  //   contributors.forEach((member) => {
-  //     const contributorBoxDiv = document.createElement('div');
-  //     contributorBoxDiv.setAttribute('class', 'contributor-box');
-  //     const contributorImage = document.createElement('img');
-  //     contributorImage.src = member.avatar_url;
-  //     const contributorName = document.createElement('a');
-  //     contributorName.setAttribute('href', '${member.html_url}');
-  //     contributorName.innerText = member.login;
-  //     const badge = document.createElement('h5');
-  //     badge.setAttribute('class', 'badge');
-  //     badge.innerText = member.contributions;
-  //     contributorMembersDiv.appendChild(contributorBoxDiv);
-  //     contributorBoxDiv.appendChild(contributorImage);
-  //     contributorBoxDiv.appendChild(contributorName);
-  //     contributorBoxDiv.appendChild(badge);
-  //   });
-  // }
+  // async function used to fetch the data of the contributors connected to pagination function
+  async function fetchContributors(element) {
+    try {
+      const contributorUrl = `https://api.github.com/repos/HackYourFuture/${element.name}/contributors`;
+      const fetchContributors = await fetch(contributorUrl);
+      if (fetchContributors.status < 400) {
+        const response = await fetchContributors.json();
+        return paginateThePage(response);
+      } else {
+        errorDiv.style.display = 'block';
+      }
+    } catch {
+      errorDiv.style.display = 'block';
+    }
+  }
+
+  // function used display the fetch contributors data
   function displayContributors(contributors, container, rowPerPage, page) {
     container.innerHTML = '';
     page--;
@@ -210,30 +216,7 @@ function main() {
       contributorBoxDiv.appendChild(badge);
     }
   }
-  async function fetchContributors(element) {
-    try {
-      const contributorUrl = `https://api.github.com/repos/HackYourFuture/${element.name}/contributors`;
-      const fetchContributors = await fetch(contributorUrl);
-      if (fetchContributors.status < 400) {
-        const response = await fetchContributors.json();
-        return paginateThePage(response);
-      } else {
-        errorDiv.style.display = 'block';
-      }
-    } catch {
-      errorDiv.style.display = 'block';
-    }
-    // const contributorUrl = `https://api.github.com/repos/HackYourFuture/${element.name}/contributors`;
-    // fetch(contributorUrl)
-    //   .then((response) => {
-    //     const data = response.json();
-    //     return data;
-    //   })
-    //   .then((data) => {
-    //     paginateThePage(data);
-    //   })
-    //   .catch((error) => (errorDiv.style.display = 'block'));
-  }
+
   fetchTheDataOfRepositories();
 }
 
